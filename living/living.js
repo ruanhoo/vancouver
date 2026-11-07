@@ -409,6 +409,17 @@
   // POI scenery objects (buildings, lamps etc.)
   buildings.forEach((b) => statics.push({ x: b.x, y: b.y + 6, m: 150, wide: b.w, f: () => drawBuilding(b), b }));
 
+  // teleport portal, beside the Rocky Mountaineer station
+  const PORTAL = (() => {
+    const s = bById.get('rmstation') || buildings[0];
+    for (let r = 70; r < 420; r += 20) for (let a = 0; a < 20; a++) {
+      const ang = Math.PI * 0.5 + (a / 20) * TAU; const x = Math.round(s.x + Math.cos(ang) * r * 1.3); const y = Math.round(s.y + Math.sin(ang) * r * 0.8);
+      if (isLand(x, y + 8) && !nearWaterPoly(x, y, 18) && !onRoad(x, y) && !nearRiver(x, y, 14) && !nearBuilding(x, y, 52)) return { x, y };
+    }
+    return { x: s.x - 150, y: s.y + 60 };
+  })();
+  if (window.TELE) statics.push({ x: PORTAL.x, y: PORTAL.y, m: 110, wide: 90, f: (X, Y, k) => window.TELE.draw(g, X, Y, k, time, env.n) });
+
   // cables (gondolas)
   const CABLES = [];
   const cableAt = (id, a, b, name) => { const bl = bById.get(id); if (bl) CABLES.push({ id, name, a: [bl.x + a[0], bl.y + a[1], a[2]], b: [bl.x + b[0], bl.y + b[1], b[2]], cabins: [0, 0.5].map((t, i) => ({ t, d: i ? -1 : 1 })), v: 0.045 }); };
@@ -1464,6 +1475,10 @@
         pill(text, X, Y, { size, bg: mix(d.c, '#ffffff', 0.72) }); taken.push(pillRect(text, X, Y, size));
       });
     }
+    if (labelsOn && window.TELE && cam.z > 0.2 && cam.z < 1.6) {
+      const X = sx(PORTAL.x); const Y = sy(PORTAL.y, 92 + 14 / cam.z); const text = '🌀 ' + window.TELE.portalLabel();
+      if (onScreen(X, Y, 80)) { const r = pillRect(text, X, Y, 12); if (free(r)) { pill(text, X, Y, { size: 12, bg: '#e9e3ff' }); taken.push(r); } }
+    }
     // mountain names
     if (labelsOn && cam.z > 0.1 && cam.z < 1.1) {
       BIGM.forEach((m) => {
@@ -1637,11 +1652,14 @@
     }
     return best;
   }
+  const hitPortal = (x, y) => !!window.TELE && window.TELE.hit(x, y, sx(PORTAL.x), sy(PORTAL.y), cam.z);
   function hover(x, y) {
+    if (hitPortal(x, y)) { hoverB = null; cv.style.cursor = 'pointer'; return; }
     const p = hitPerson(x, y); const t = p ? null : hitTrain(x, y); const b = p || t ? null : hitBuilding(x, y);
     hoverB = b; cv.style.cursor = p || b || t ? 'pointer' : '';
   }
   function clickAt(x, y) {
+    if (hitPortal(x, y)) { window.TELE.open(); return; }
     const p = hitPerson(x, y);
     if (p) { startFollow(p); return; }
     const t = hitTrain(x, y);
@@ -1955,6 +1973,7 @@
     $('bHelp').setAttribute('aria-label', tx('help'));
     if (!$('decreeTx').textContent || $('decreeTx').dataset.first) { $('decreeTx').textContent = tx('decreeFirst'); $('decreeTx').dataset.first = '1'; }
     syncPause();
+    if (window.TELE) window.TELE.refresh();
   }
   function setLang(next) {
     if (!LANGS.includes(next) || next === lang) return;
@@ -1970,6 +1989,8 @@
   resize(); fitStart(); cam.x = cam.tx; cam.y = cam.ty; cam.z = cam.tz * 0.8;
   if (reduceMotion) { paused = true; setBtn('bPause', true); }
   applyStatic(); buildTod(); buildSeason(); buildJump(); buildChips(); buildList(); buildPlanSelects(); buildPlanList();
+  if (window.TELE) window.TELE.init({ here: 'vancouver', getLang: () => lang });
+  if (QS.get('portal')) { Object.assign(cam, { x: PORTAL.x, y: PORTAL.y - 20, z: 1.1, tx: PORTAL.x, ty: PORTAL.y - 20, tz: 1.1 }); if (QS.get('portal') === 'open') window.TELE.open(); }
   addLog(esc(tx('decreeFirst')), 'own', true);
   let introSeen = false; try { introSeen = !!localStorage.getItem(INTRO_KEY); } catch (e) { /* ignore */ }
   if (!introSeen && !QS.has('nointro')) openIntro(0);
