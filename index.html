@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hello Vancouver! A cartoon guide to sights &amp; food</title>
+  <meta name="description" content="A cartoon-style travel guide to Vancouver, Canada: the Sea-to-Sky Highway to Whistler, Victoria, the Fraser Valley to Hope, the Rocky Mountaineer train and food from around the world.">
+  <meta name="theme-color" content="#58b9d6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="vendor/MarkerCluster.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#explore" data-i18n="skip">Skip to the map</a>
+
+  <header class="site-header">
+    <a class="brand" href="#top" data-i18n-aria="brandAria" aria-label="Hello Vancouver home">
+      <span class="brand__icon" aria-hidden="true">🏔️</span>
+      <span class="brand__text" data-i18n="brand">Hello Vancouver!</span>
+    </a>
+    <div class="header__right">
+      <nav class="nav" aria-label="Main">
+        <a href="#explore" data-i18n="navMap">Map</a>
+        <a href="#tips" data-i18n="navTips">Tips</a>
+        <a href="living/index.html" data-i18n="navCity">Living map</a>
+      </nav>
+      <div class="lang" role="group" data-i18n-aria="langAria" aria-label="Language">
+        <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="zh" lang="zh" aria-pressed="false">中文</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="sticker" data-i18n="sticker">Vancouver · BC, Canada</p>
+        <h1 data-i18n-html="heroTitleHtml">Welcome to <span class="hl">Vancouver!</span></h1>
+        <p class="hero__lead" data-i18n="heroLead">Mountains, ocean and a navy-and-gold train. Ride the Sea-to-Sky to Whistler, hop a ferry to Victoria, roll east to Hope, and eat your way around the world, from Richmond dim sum to Nanaimo bars.</p>
+        <a class="btn" href="#explore" data-i18n="openMap">🗺️ Open the map</a>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" focusable="false">
+          <g stroke="#2d2a32" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+            <rect x="0" y="0" width="600" height="420" fill="#bfe8fb" stroke="none"/>
+            <g class="sun">
+              <circle cx="500" cy="82" r="62" fill="none" stroke="#ffc93c" stroke-width="10" stroke-dasharray="4 20"/>
+              <circle cx="500" cy="82" r="40" fill="#ffd95a"/>
+              <circle cx="487" cy="76" r="4.5" fill="#2d2a32" stroke="none"/>
+              <circle cx="513" cy="76" r="4.5" fill="#2d2a32" stroke="none"/>
+              <path d="M486 92 Q500 106 514 92" fill="none"/>
+              <circle cx="477" cy="90" r="6" fill="#ff9ebb" stroke="none" opacity=".8"/>
+              <circle cx="523" cy="90" r="6" fill="#ff9ebb" stroke="none" opacity=".8"/>
+            </g>
+            <g class="cloud cloud--a" fill="#fff"><path d="M70 110 q-30 0 -30 -22 q0 -22 28 -22 q6 -22 36 -20 q26 2 28 24 q26 2 24 22 q-2 18 -26 18 z"/></g>
+            <g class="cloud cloud--b" fill="#fff"><path d="M300 64 q-24 0 -24 -17 q0 -17 22 -17 q5 -17 28 -15 q21 2 22 19 q20 2 19 17 q-2 13 -20 13 z"/></g>
+            <!-- three snowy North Shore peaks -->
+            <path d="M-10 290 L90 140 L150 220 L215 120 L300 250 L380 150 L450 240 L520 160 L610 290 Z" fill="#8fb7d6"/>
+            <path d="M90 140 L68 172 L84 166 L96 182 L108 166 L124 176 Z M215 120 L190 156 L206 150 L218 168 L232 152 L248 162 Z M380 150 L356 184 L372 178 L384 194 L398 178 L414 188 Z M520 160 L498 190 L512 184 L524 198 L536 184 L550 192 Z" fill="#fff"/>
+            <path d="M-10 300 Q80 250 170 292 Q260 240 350 296 Q450 250 610 300 V320 H-10 Z" fill="#3fb68b"/>
+            <!-- sea -->
+            <rect x="-10" y="300" width="620" height="130" fill="#58b9d6"/>
+            <path d="M30 322 q10 -7 20 0 t20 0 M240 336 q10 -7 20 0 t20 0 M420 322 q10 -7 20 0 t20 0" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+            <!-- Canada Place sails -->
+            <g>
+              <rect x="80" y="296" width="150" height="14" rx="3" fill="#d9c9a3"/>
+              <path d="M96 296 L118 258 L140 296 Z M136 296 L158 252 L180 296 Z M176 296 L198 258 L220 296 Z" fill="#fff"/>
+            </g>
+            <!-- kayak -->
+            <g><path d="M380 322 Q410 336 450 322 Q410 318 380 322 Z" fill="#e8503a"/><path d="M398 316 L428 332" fill="none"/></g>
+            <!-- shore and railway -->
+            <rect x="-10" y="352" width="620" height="80" fill="#a5db86"/>
+            <path d="M-10 354 H610" fill="none"/>
+            <path d="M-10 396 H610" fill="none" stroke-width="5"/>
+            <path d="M0 404 H600" fill="none" stroke-width="2.5" stroke-dasharray="4 10"/>
+            <!-- Rocky Mountaineer-style train -->
+            <g class="train">
+              <!-- locomotive -->
+              <path d="M18 372 H92 L104 384 V394 H18 Z" fill="#1d3a6e"/>
+              <rect x="58" y="360" width="34" height="14" rx="3" fill="#1d3a6e"/>
+              <rect x="64" y="364" width="12" height="8" rx="2" fill="#bfe8fb" stroke-width="2.5"/>
+              <path d="M18 384 H104" fill="none" stroke="#ffc93c" stroke-width="5"/>
+              <path d="M92 372 L104 384 V394 H92 Z" fill="#ffc93c"/>
+              <!-- car 1 with glass dome -->
+              <rect x="112" y="368" width="150" height="26" rx="5" fill="#1d3a6e"/>
+              <path d="M130 368 Q134 352 150 352 H226 Q242 352 246 368 Z" fill="#bfe8fb"/>
+              <path d="M168 352 V368 M206 352 V368" fill="none" stroke-width="2.5"/>
+              <path d="M112 384 H262" fill="none" stroke="#ffc93c" stroke-width="5"/>
+              <path d="M126 376 h22 M156 376 h22 M186 376 h22 M216 376 h22" fill="none" stroke="#bfe8fb" stroke-width="6"/>
+              <!-- car 2 -->
+              <rect x="270" y="368" width="150" height="26" rx="5" fill="#1d3a6e"/>
+              <path d="M288 368 Q292 352 308 352 H384 Q400 352 404 368 Z" fill="#bfe8fb"/>
+              <path d="M326 352 V368 M364 352 V368" fill="none" stroke-width="2.5"/>
+              <path d="M270 384 H420" fill="none" stroke="#ffc93c" stroke-width="5"/>
+              <path d="M284 376 h22 M314 376 h22 M344 376 h22 M374 376 h22" fill="none" stroke="#bfe8fb" stroke-width="6"/>
+              <circle cx="40" cy="396" r="6" fill="#2d2a32"/><circle cx="80" cy="396" r="6" fill="#2d2a32"/>
+              <circle cx="140" cy="396" r="6" fill="#2d2a32"/><circle cx="234" cy="396" r="6" fill="#2d2a32"/>
+              <circle cx="300" cy="396" r="6" fill="#2d2a32"/><circle cx="394" cy="396" r="6" fill="#2d2a32"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- FACT STRIP -->
+    <section class="facts" data-i18n-aria="factsAria" aria-label="Quick facts">
+      <ul>
+        <li><span aria-hidden="true">🛣️</span><span data-i18n-html="fact1Html"><strong>Sea to Sky</strong> highway to Whistler</span></li>
+        <li><span aria-hidden="true">🚂</span><span data-i18n-html="fact2Html"><strong>Rocky Mountaineer</strong> by train</span></li>
+        <li><span aria-hidden="true">⛷️</span><span data-i18n-html="fact3Html"><strong>Ski + sea</strong> on the same day</span></li>
+        <li><span aria-hidden="true">🍜</span><span data-i18n-html="fact4Html"><strong>Food</strong> from 20+ cuisines</span></li>
+      </ul>
+    </section>
+
+    <!-- MAP -->
+    <section class="explore-section" id="explore" aria-labelledby="explore-title">
+      <div class="section-head">
+        <h2 id="explore-title" data-i18n="exploreTitle">Pick a spot on the map!</h2>
+        <div class="chips" role="group" data-i18n-aria="filterAria" aria-label="Show on map">
+          <button class="chip is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">🗺️ All</button>
+          <button class="chip" type="button" data-filter="sight" aria-pressed="false" data-i18n="filterSight">🏔️ Sights</button>
+          <button class="chip" type="button" data-filter="food" aria-pressed="false" data-i18n="filterFood">🍜 Food</button>
+        </div>
+      </div>
+
+      <div class="explore">
+        <div class="map-wrap">
+          <div id="map" role="application" data-i18n-aria="mapAria" aria-label="Interactive map of Vancouver sights and food"></div>
+          <button id="fit" class="map-btn" type="button" data-i18n="resetView">🔭 Reset view</button>
+          <noscript><p class="noscript" data-i18n="noscript">The map needs JavaScript. Try enabling it!</p></noscript>
+        </div>
+        <ul id="list" class="list" data-i18n-aria="listAria" aria-label="Places"></ul>
+      </div>
+      <p class="note" data-i18n="note">Food pins mark neighbourhoods that are great for a dish, not endorsements of one shop. Opening hours, prices and train routes change, so check before you go.</p>
+    </section>
+
+    <!-- TIPS -->
+    <section class="tips" id="tips" aria-labelledby="tips-title">
+      <h2 id="tips-title" data-i18n="tipsTitle">Little tips for big adventures</h2>
+      <div class="tips__grid">
+        <article class="tip tip--yellow">
+          <span class="tip__icon" aria-hidden="true">🌸</span>
+          <h3 data-i18n="tip1Title">When to go</h3>
+          <p data-i18n="tip1">Cherry blossoms in spring, kayaks and paddleboards in summer, skiing at Whistler from winter. Bring a rain jacket in any season.</p>
+        </article>
+        <article class="tip tip--sky">
+          <span class="tip__icon" aria-hidden="true">🚇</span>
+          <h3 data-i18n="tip2Title">Getting around</h3>
+          <p data-i18n="tip2">SkyTrain, buses and the SeaBus cover the city. For Whistler, Victoria and Hope, rent a car, take a ferry or board a train.</p>
+        </article>
+        <article class="tip tip--pink">
+          <span class="tip__icon" aria-hidden="true">⛴️</span>
+          <h3 data-i18n="tip3Title">Ferries</h3>
+          <p data-i18n="tip3">BC Ferries to Victoria and Nanaimo can sell out in summer. Reserve ahead for cars.</p>
+        </article>
+        <article class="tip tip--jade">
+          <span class="tip__icon" aria-hidden="true">🧥</span>
+          <h3 data-i18n="tip4Title">Dress</h3>
+          <p data-i18n="tip4">Locals live in hoodies, yoga pants and shell jackets. Layers and comfy shoes win.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p data-i18n-html="footerHtml">Made with 🧡 for curious travellers. Map data © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> contributors.</p>
+  </footer>
+
+  <script src="vendor/leaflet.js"></script>
+  <script src="vendor/leaflet.markercluster.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
