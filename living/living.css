@@ -94,7 +94,7 @@ canvas.drag { cursor: grabbing; }
 #card p { margin: 0 0 6px; font-size: 14.5px; line-height: 1.4; }
 #card .tip { font-size: 13.5px; padding: 6px 10px; background: var(--cream); border: 2px dashed var(--ink); border-radius: 12px; }
 #card .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-#card .x { position: absolute; right: 10px; top: 6px; border: 0; background: none; font-size: 24px; cursor: pointer; color: var(--mut); line-height: 1; min-width: 32px; min-height: 32px; }
+#card .x { position: absolute; right: 10px; top: 6px; border: 0; background: none; font-size: 24px; cursor: pointer; color: var(--mut); line-height: 1; min-width: 32px; min-height: 32px; z-index: 3; }
 
 .btn {
   display: inline-block; cursor: pointer; text-decoration: none; font-weight: 600; font-size: 13.5px; padding: 6px 14px; min-height: 34px;
@@ -198,3 +198,15 @@ html[lang="zh-CN"] body { letter-spacing: .02em; }
   .jb { flex: none; padding: 4px 11px; font-size: 12.5px; min-height: 30px; }
   #decree { display: none; }
 }
+
+/* real photo slideshow (Wikipedia) at the top of a place card */
+#card .photo { position: relative; height: 150px; margin: 0 0 8px; border: var(--border); border-radius: 14px; overflow: hidden; background: #dfe9f2; box-shadow: 2px 2px 0 var(--ink); }
+#card .photo[hidden] { display: none; }
+#card .photo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .7s; }
+#card .photo img.in { opacity: 1; }
+#card .photo .cr { position: absolute; right: 6px; bottom: 6px; padding: 1px 8px; font-size: 11px; font-weight: 600; color: var(--ink); text-decoration: none; background: rgba(255,255,255,.88); border-radius: 10px; }
+#card .photo .dots { position: absolute; left: 8px; bottom: 8px; display: flex; gap: 5px; }
+#card .photo .dots button { width: 9px; height: 9px; padding: 0; border: 1.5px solid var(--ink); border-radius: 50%; background: rgba(255,255,255,.85); cursor: pointer; }
+#card .photo .dots button.on { background: var(--ink); }
+@media (max-width: 600px) { #card .photo { height: 100px; } }
+#card:has(.photo:not([hidden])) .x { background: rgba(255,255,255,.9); border-radius: 50%; top: 10px; right: 14px; color: var(--ink); }

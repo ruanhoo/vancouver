@@ -167,6 +167,8 @@
     const at = (id, dx, dy) => { o[id] = [v[0] + dx, v[1] + dy]; };
     at('innerharbour', 0, 6); at('empress', 96, -34); at('parliament', -88, 30); at('rbcm', -42, -56); at('craigdarroch', 214, -66);
     at('wharf', -150, 106); at('vicchina', 40, -140); at('tea', 140, 36); at('fishwharf', -112, 30);
+    // Cypress sits between Grouse and the far-west range on the drawn map (its lat/lng is kept exact for the classic map)
+    o.cypress = [-108, -776];
     return o;
   })();
   PLACES.forEach((p, idx) => {
@@ -345,6 +347,8 @@
   // trees (street, parks, forests)
   const PARKS = [['stanley', 190], ['qe', 110], ['vandusen', 110], ['butchart', 90], ['kits', 60], ['langley', 80]];
   const parkAt = (x, y) => PARKS.some(([id, r]) => { const b = bById.get(id); return b && Math.hypot(b.x - x, (b.y - y) * 1.3) < r; });
+  // keep the Olympic rings at Cypress clear of scenery that would stand in front of them
+  const nearRings = (x, y, pad) => { const c = bById.get('cypress'); return !!c && Math.abs(x - (c.x - 64)) < 70 + pad && y > c.y - 40 && y < c.y + 60 + pad * 3.4; };
   const trees = [];
   function addTree(x, y, type) {
     const t = { x, y, type, s: 0.8 + hashN(x, y) * 0.55, c: hashN(y, x * 3) };
@@ -359,7 +363,7 @@
     else if (farm) p = 0.06;
     else if (u > 0.1) p = 0.16 + u * 0.1; else p = 0.45;
     if (hashN(x * 7, y * 3) > p) continue;
-    if (!isLand(x, y) || nearRiver(x, y, 8) || onRoad(x, y) || nearWaterPoly(x, y, 8) || nearBuilding(x, y, 36)) continue;
+    if (!isLand(x, y) || nearRiver(x, y, 8) || onRoad(x, y) || nearWaterPoly(x, y, 8) || nearBuilding(x, y, 36) || nearRings(x, y, 0)) continue;
     if (Math.hypot(x - TOWER_C[0], y - TOWER_C[1]) < 150 && !parkAt(x, y)) continue;
     if (!mtn && type === 'dec' && hashN(x * 3, y * 9) < 0.55 && u > 0.1) type = 'cherry';
     addTree(x, y, type);
@@ -396,7 +400,7 @@
     if (m.ski) for (let s = 0; s < 3; s++) m.skiers.push({ run: s % m.runs, t: (s * 0.37 + hashN(i, s)) % 1, v: 0.09 + hashN(s, i) * 0.04 });
     statics.push({ x: m.x, y: m.y, m: m.h + 60, wide: m.w, f: (X, Y, k) => drawBigMountain(m, X, Y, k) });
   });
-  const nearBig = (x, y) => BIGM.some((m) => Math.abs(m.x - x) < m.w * 0.55 + 40 && y < m.y + 40 && y > m.y - 70);
+  const nearBig = (x, y) => nearRings(x, y, 50) || BIGM.some((m) => Math.abs(m.x - x) < m.w * 0.55 + 40 && y < m.y + 40 && y > m.y - 70);
   const PEAKS = [];
   for (let gx = WORLD.x0; gx < WORLD.x1; gx += 108) for (let gy = WORLD.y0; gy < WORLD.y1; gy += 76) {
     const x = gx + (hashN(gx * 3, gy) - 0.5) * 80; const y = gy + (hashN(gy * 3, gx) - 0.5) * 54;
@@ -823,7 +827,18 @@
     box(14, -52, 8, 14, '#8a8f98'); box(-7, -20, 14, 20, night > 0.2 ? '#ffd873' : '#6b4a30', 2);
     box(-24, -20, 10, 8, night > 0.2 ? '#ffd873' : '#bfe3f5', 1.5);
     if (b.kind.cable) { box(32, -40, 5, 40, '#6b6f78'); ell(34.5, -44, 7, 7, '#e8503a', true); }
+    if (b.id === 'cypress') drawRings(-64, 0);
     if (night > 0.2) lights.push([0, -14, 36, '255,190,90']);
+  }
+  // the five Olympic rings on a little stand (Cypress hosted snowboard and freestyle skiing in 2010)
+  function drawRings(x, y) {
+    ell(x, y + 2, 26, 5, 'rgba(0,0,0,.18)');
+    box(x - 22, y - 36, 4, 36, '#8a8f98', 1.5); box(x + 18, y - 36, 4, 36, '#8a8f98', 1.5);
+    const R = 7.5; const rings = [[-16, -52, '#0085c7'], [0, -52, '#1d1d1d'], [16, -52, '#df0024'], [-8, -44, '#f4c300'], [8, -44, '#009f3d']];
+    g.save(); g.lineCap = 'butt';
+    g.lineWidth = 6; g.strokeStyle = INK; rings.forEach(([dx, dy]) => { g.beginPath(); g.arc(x + dx, y + dy, R, 0, TAU); g.stroke(); });
+    g.lineWidth = 3.2; rings.forEach(([dx, dy, c]) => { g.strokeStyle = c; g.beginPath(); g.arc(x + dx, y + dy, R, 0, TAU); g.stroke(); });
+    g.restore();
   }
   function drawDock(b) {
     const c = b.kind.c || '#e8503a';
@@ -1706,7 +1721,7 @@
     card.innerHTML =
       `<button class="x" type="button" aria-label="${esc(tx('close'))}">×</button>` +
       `<div class="sign" style="background:${d.c}">${p.emoji}</div>` +
-      `<div class="body"><h2 lang="${lang}">${esc(nameOf(p))}</h2><div class="sub" lang="${lang === 'zh' ? 'en' : 'zh'}">${esc(subOf(p))}</div>` +
+      `<div class="body"><div class="photo" data-photo="${p.id}" hidden></div><h2 lang="${lang}">${esc(nameOf(p))}</h2><div class="sub" lang="${lang === 'zh' ? 'en' : 'zh'}">${esc(subOf(p))}</div>` +
       `<div class="tags"><span class="tag" style="background:${mix(d.c, '#ffffff', 0.55)}">${esc(tx('districts')[b.dist])}</span><span class="tag">${esc(typeLabel(p))}${p.far ? esc(tx('dayTrip')) : ''}</span></div>` +
       `<p>${esc(placeText(p, 'blurb'))}</p><div class="tip">💡 ${esc(placeText(p, 'tip'))}</div>` +
       `<div class="acts"><button class="btn" data-act="fav" type="button">${esc(tx(fav ? 'saved' : 'save'))}</button>` +
@@ -1714,6 +1729,7 @@
       `<a class="btn" href="https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lng}#map=17/${p.lat}/${p.lng}" target="_blank" rel="noopener">${esc(tx('osm'))}</a></div></div>`;
     card.classList.add('show');
     card.querySelector('.x').onclick = closeCard;
+    if (window.VAN_PHOTO) window.VAN_PHOTO.fill(card.querySelector('.photo'), p.id, () => selId === p.id);
     card.querySelector('[data-act=fav]').onclick = () => { if (favs.has(p.id)) favs.delete(p.id); else favs.add(p.id); saveFavs(); renderCard(); buildList(); };
     card.querySelector('[data-act=route]').onclick = () => { if (planSel.has(p.id)) planSel.delete(p.id); else planSel.add(p.id); renderCard(); buildPlanList(); };
   }

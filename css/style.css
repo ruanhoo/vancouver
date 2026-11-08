@@ -336,3 +336,13 @@ button { font: inherit; color: inherit; }
 /* Chinese mode: a touch more breathing room for CJK glyphs */
 html[lang="zh-CN"] body { line-height: 1.6; letter-spacing: .02em; }
 html[lang="zh-CN"] h1 { line-height: 1.2; }
+
+/* real photo slideshow (Wikipedia) in a popup */
+.popup__photo { position: relative; width: 220px; max-width: 100%; height: 130px; margin: 0 0 8px; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; background: #dfe9f2; }
+.popup__photo[hidden] { display: none; }
+.popup__photo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .7s; }
+.popup__photo img.in { opacity: 1; }
+.popup__photo .cr { position: absolute; right: 5px; bottom: 5px; padding: 1px 7px; font-size: 10.5px; font-weight: 600; color: var(--ink); text-decoration: none; background: rgba(255,255,255,.88); border-radius: 10px; }
+.popup__photo .dots { position: absolute; left: 6px; bottom: 6px; display: flex; gap: 4px; }
+.popup__photo .dots button { width: 8px; height: 8px; padding: 0; border: 1.5px solid var(--ink); border-radius: 50%; background: rgba(255,255,255,.85); cursor: pointer; }
+.popup__photo .dots button.on { background: var(--ink); }

@@ -88,7 +88,10 @@
   const mapsLink = (p) => `https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lng}#map=17/${p.lat}/${p.lng}`;
 
   const markerTitle = (p) => `${nameOf(p)} (${tagOf(p)})`;
+  // popup.update() would re-set the HTML and wipe the photo, so only re-measure and re-position the popup.
+  function relayout(pop) { if (!pop._map) return; pop._updateLayout(); pop._updatePosition(); pop._adjustPan(); }
   const popupHTML = (p) =>
+    `<div class="popup__photo" data-photo="${p.id}" hidden></div>` +
     `<div class="popup__title" lang="${lang}">${p.emoji} ${esc(nameOf(p))}</div>` +
     `<div class="popup__zh" lang="${lang === 'zh' ? 'en' : 'zh'}">${esc(subNameOf(p))}</div>` +
     `<a class="popup__link" href="${mapsLink(p)}" target="_blank" rel="noopener">${esc(t('openOsm'))}</a>`;
@@ -104,6 +107,7 @@
     });
     const m = L.marker([p.lat, p.lng], { icon, title: markerTitle(p), alt: nameOf(p), riseOnHover: true });
     m.bindPopup(popupHTML(p), { closeButton: true, autoPanPadding: [20, 20] });
+    m.on('popupopen', (e) => { const box = e.popup.getElement() && e.popup.getElement().querySelector('.popup__photo'); if (box && window.VAN_PHOTO) window.VAN_PHOTO.fill(box, p.id, () => true, () => relayout(e.popup)); });
     m.on('click', () => select(p.id, { from: 'map' }));
     m.on('popupclose', () => { if (activeId === p.id) clearActive(); });
     return m;
