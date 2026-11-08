@@ -14,6 +14,7 @@ Live site: https://ruanhoo.github.io/vancouver/
   - **Seasons**: cherry blossom in spring, kayaks, paddleboards and sailboats in summer, autumn leaves, and snow with skiers on Cypress, Grouse, Seymour, Whistler and Blackcomb in winter.
   - **People** dress for the West Coast: hoodies and shorts, lululemon-style leggings, softshell jackets, daypacks and yoga mats.
   - Cypress Mountain stands between Grouse and the western range, with the five Olympic rings beside its lodge (it hosted snowboard and freestyle skiing in 2010).
+  - Burnaby Mountain Park is a hilltop lookout on the south shore of Burrard Inlet, with a deck, binoculars, totem poles and sightlines fanning out over the inlet and the North Shore.
   - Ferries, a seaplane, gondolas, cars, a day/night cycle, a route planner and a journal.
 
 ## Run locally

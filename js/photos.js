@@ -28,6 +28,7 @@
       "Cypress Mountain",
       "Cypress Provincial Park"
     ],
+    "burnaby": ["Burnaby Mountain", "Simon Fraser University", "Burnaby"],
     "seymour": [
       "Mount Seymour Provincial Park",
       "Mount Seymour"

@@ -89,7 +89,7 @@
     chinatown: { k: 'paifang', roof: '#e8503a' }, stanley: { k: 'totem' }, aquarium: { k: 'hall', roof: '#3a8fc7', wall: '#e6f1fb', gable: true },
     lionsgate: { k: 'bridge' }, englishbay: { k: 'inukshuk' }, granville: { k: 'hall', roof: '#ff9a4d', wall: '#fff1d6', gable: true, big: true },
     kits: { k: 'beach' }, qe: { k: 'dome', c: '#9be3c4', pink: true }, vandusen: { k: 'garden' }, moa: { k: 'hall', roof: '#8a8f98', wall: '#d8d4cc', flat: true, big: true },
-    capilano: { k: 'bridge2' }, grouse: { k: 'lodge', cable: true }, cypress: { k: 'lodge' }, seymour: { k: 'lodge' }, lynn: { k: 'bridge2' }, deepcove: { k: 'dock', c: '#e8503a' },
+    capilano: { k: 'bridge2' }, grouse: { k: 'lodge', cable: true }, cypress: { k: 'lodge' }, seymour: { k: 'lodge' }, burnaby: { k: 'view' }, lynn: { k: 'bridge2' }, deepcove: { k: 'dock', c: '#e8503a' },
     steveston: { k: 'dock', c: '#3a6fc7' }, buddhist: { k: 'hall', roof: '#e8a02e', wall: '#e8503a', chinese: true, big: true },
     horseshoe: { k: 'dock', c: '#ffffff', ferry: true }, britannia: { k: 'mine' }, shannon: { k: 'falls' }, gondola: { k: 'lodge', cable: true }, chief: { k: 'rock' },
     brandywine: { k: 'falls' }, garibaldi: { k: 'rock', lake: true }, whistler: { k: 'village' }, peak2peak: { k: 'lodge', cable: true },
@@ -169,6 +169,7 @@
     at('wharf', -150, 106); at('vicchina', 40, -140); at('tea', 140, 36); at('fishwharf', -112, 30);
     // Cypress sits between Grouse and the far-west range on the drawn map (its lat/lng is kept exact for the classic map)
     o.cypress = [-108, -776];
+    o.burnaby = [988, 72];
     return o;
   })();
   PLACES.forEach((p, idx) => {
@@ -179,7 +180,7 @@
     if (k === 'shop') { b.h = 24 + ((idx * 37) % 5) * 5; b.w = 50; b.hh = b.h + 22; }
     else if (k === 'dome') { b.w = 70; b.hh = 70; } else if (k === 'sails') { b.w = 100; b.hh = 66; } else if (k === 'clock') { b.w = 50; b.hh = 88; }
     else if (k === 'station') { b.w = 100; b.hh = 62; } else if (k === 'bridge') { b.w = 112; b.hh = 80; } else if (k === 'bridge2') { b.w = 100; b.hh = 56; }
-    else if (k === 'lodge') { b.w = 70; b.hh = 62; } else if (k === 'village') { b.w = 100; b.hh = 70; } else if (k === 'castle') { b.w = 76; b.hh = 80; }
+    else if (k === 'view') { b.w = 130; b.hh = 110; } else if (k === 'lodge') { b.w = 70; b.hh = 62; } else if (k === 'village') { b.w = 100; b.hh = 70; } else if (k === 'castle') { b.w = 76; b.hh = 80; }
     else if (k === 'capitol') { b.w = 92; b.hh = 82; } else if (k === 'rock') { b.w = 80; b.hh = 86; } else if (k === 'falls') { b.w = 62; b.hh = 80; }
     else if (k === 'paifang') { b.w = 72; b.hh = 56; } else if (k === 'totem') { b.w = 64; b.hh = 82; } else if (k === 'inukshuk') { b.w = 52; b.hh = 56; }
     else { b.w = kind.big ? 84 : 70; b.hh = kind.big ? 62 : 54; }
@@ -840,6 +841,29 @@
     g.lineWidth = 3.2; rings.forEach(([dx, dy, c]) => { g.strokeStyle = c; g.beginPath(); g.arc(x + dx, y + dy, R, 0, TAU); g.stroke(); });
     g.restore();
   }
+  // a grassy hilltop lookout: railed deck, coin-op binoculars and a pair of totem poles (Burnaby Mountain)
+  function drawViewpoint(b, night) {
+    ell(4, 3, 66, 11, 'rgba(0,0,0,.18)');
+    /* wide grassy hilltop */
+    g.beginPath(); g.moveTo(-66, 0); g.quadraticCurveTo(-46, -44, 0, -46); g.quadraticCurveTo(46, -44, 66, 0); g.closePath(); g.fillStyle = '#7fc46a'; g.fill(); g.stroke();
+    g.save(); g.globalAlpha = .35; g.fillStyle = '#b8e08a'; g.beginPath(); g.moveTo(-40, -12); g.quadraticCurveTo(-26, -34, -4, -38); g.quadraticCurveTo(-24, -26, -30, -10); g.closePath(); g.fill(); g.restore();
+    /* little pines on the slopes */
+    [[-52, -6, .8], [-44, -2, 1], [50, -4, .9], [42, -1, 1.05]].forEach(([x, y, s]) => { poly([[x - 7 * s, y], [x + 7 * s, y], [x, y - 22 * s]], '#3f8a4f'); box(x - 1.5, y, 3, 5, '#7a4e2c', 1); });
+    /* sightlines fanning out over the inlet */
+    g.save(); g.setLineDash([5, 5]); g.lineWidth = 2.4; g.strokeStyle = 'rgba(255,214,90,.95)'; g.lineCap = 'round';
+    [[-60, -86], [0, -104], [60, -86]].forEach(([dx, dy]) => { g.beginPath(); g.moveTo(dx * .22, -58); g.quadraticCurveTo(dx * .6, dy * .75, dx, dy); g.stroke(); });
+    g.setLineDash([]); g.fillStyle = 'rgba(255,214,90,.95)';
+    [[-60, -86, -.8], [0, -104, 0], [60, -86, .8]].forEach(([x, y, a]) => { g.save(); g.translate(x, y); g.rotate(a); g.beginPath(); g.moveTo(0, -7); g.lineTo(6, 3); g.lineTo(-6, 3); g.closePath(); g.fill(); g.restore(); });
+    g.restore();
+    /* lookout deck, railing, coin binoculars */
+    box(-30, -50, 60, 8, '#b88a5a', 2);
+    g.save(); g.lineWidth = 1.5; g.beginPath(); g.moveTo(-30, -62); g.lineTo(30, -62); g.stroke(); for (let x = -30; x <= 30; x += 12) { g.beginPath(); g.moveTo(x, -62); g.lineTo(x, -50); g.stroke(); } g.restore();
+    box(-3, -66, 6, 16, '#6b6f78', 1.5); box(-9, -72, 18, 7, '#e8503a', 2);
+    /* totem poles */
+    [[-46, '#c8553d'], [-40, '#3a8f9a']].forEach(([x, c], i) => { box(x - 3, -42 - i * 7, 6, 42 + i * 7 - 8, c, 1.5); ell(x, -34 - i * 7, 2.2, 1.8, '#fffdf6', true); });
+    box(36, -44, 4, 26, '#6b6f78', 1.5); poly([[40, -44], [56, -39], [40, -34]], '#ffc93c');
+    if (night > 0.2) lights.push([0, -56, 46, '255,214,130']);
+  }
   function drawDock(b) {
     const c = b.kind.c || '#e8503a';
     box(-34, -4, 68, 6, '#a8764a', 1.5);
@@ -958,6 +982,7 @@
       case 'garden': drawGarden(b); break;
       case 'bridge2': drawBridge2(); break;
       case 'lodge': drawLodge(b, night); break;
+      case 'view': drawViewpoint(b, night); break;
       case 'dock': drawDock(b); break;
       case 'mine': drawMine(); break;
       case 'falls': drawFalls(); break;
@@ -1809,7 +1834,7 @@
   $('q').addEventListener('input', (e) => { query = e.target.value; buildList(); });
 
   /* ---------- route planner ---------- */
-  const DUR = { whistler: 300, gondola: 150, peak2peak: 180, butchart: 120, capilano: 90, grouse: 150, stanley: 120, aquarium: 100, empress: 60, parliament: 60, rbcm: 90, craigdarroch: 70, garibaldi: 360, chief: 240, nanaimo: 90, harrison: 120, hope: 90, othello: 60, langley: 60, moa: 90, scienceworld: 90, cypress: 120, seymour: 120, britannia: 120, shannon: 30, brandywine: 30, rmstation: 45 };
+  const DUR = { whistler: 300, gondola: 150, peak2peak: 180, butchart: 120, capilano: 90, grouse: 150, stanley: 120, aquarium: 100, empress: 60, parliament: 60, rbcm: 90, craigdarroch: 70, garibaldi: 360, chief: 240, nanaimo: 90, harrison: 120, hope: 90, othello: 60, langley: 60, moa: 90, scienceworld: 90, cypress: 120, seymour: 120, burnaby: 60, britannia: 120, shannon: 30, brandywine: 30, rmstation: 45 };
   const MODES = { walk: [4.5, 0], bike: [12, 3], transit: [22, 10], car: [48, 8] };
   const PACES = { fast: 0.7, normal: 1, slow: 1.4 };
   const STARTS = { station: { lat: 49.2737, lng: -123.0970 }, waterfront: { lat: 49.2858, lng: -123.1128 } };
