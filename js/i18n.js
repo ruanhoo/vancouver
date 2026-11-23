@@ -157,7 +157,7 @@ window.VAN_I18N = {
       jangmojib: { blurb: '西区 Bute 街 808 号的韩餐馆，以家常风味的炖锅和烤肉闻名。', tip: '人多时一起点几样分享，出发前确认营业时间。' },
       meatbread: { blurb: '煤气镇 Cambie 街 370 号的三明治店，招牌是外皮酥脆的烤猪肉（porchetta）三明治。', tip: '午市队伍走得快，最好在 12 点前到。' },
       westwood: { blurb: '高贵林上方的森林山，有徒步和山地自行车道、高尔夫球场，可远眺城市和弗雷泽河谷。', tip: '挑晴天来看风景，山上更凉，带件外套。' },
-      montessori: { blurb: '位于高贵林 Pinetree 一带的蒙特梭利学校，靠近 Pinetree Way 的商店和公园。', tip: '参观或开放时间请以学校官网为准。' },
+      montessori: { blurb: '位于高贵林 Westwood Plateau 山上的蒙特梭利学校，经 Pinetree Way 前往。', tip: '参观或开放时间请以学校官网为准。' },
       sushiboss: { blurb: '高贵林 Westwood Plateau 山上的社区寿司店，打完球或爬完山顺路去吃。', tip: '周末晚餐建议提前订位并确认营业时间。' },
       rockypoint: { blurb: '港景市 Rocky Point 公园旁的冰淇淋店，可以边吃边逛海滨。', tip: '吃完沿海岸步道走走。夏天傍晚常要排队。' },
       minami: { blurb: '位于雅利镇 Mainland 街 1118 号的日料店，以火炙（aburi）压寿司闻名。', tip: '推荐试试炙烧押寿司，晚餐建议先订位。' },
