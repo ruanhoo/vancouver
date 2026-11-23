@@ -94,6 +94,32 @@
     "ramen": "Ramen",
     "sushi": "Sushi",
     "korean": "Korean barbecue",
+    "jangmojib": [
+      "Korean barbecue",
+      "Korean cuisine"
+    ],
+    "meatbread": [
+      "Porchetta",
+      "Sandwich"
+    ],
+    "westwood": [
+      "Westwood Plateau",
+      "Coquitlam"
+    ],
+    "montessori": "Montessori education",
+    "sushiboss": [
+      "Sushi",
+      "Coquitlam"
+    ],
+    "rockypoint": [
+      "Rocky Point Park",
+      "Ice cream",
+      "Port Moody"
+    ],
+    "minami": [
+      "Sushi",
+      "Sashimi"
+    ],
     "salmon": [
       "Smoked salmon",
       "Lox"
