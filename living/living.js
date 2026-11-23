@@ -89,7 +89,7 @@
     chinatown: { k: 'paifang', roof: '#e8503a' }, stanley: { k: 'totem' }, aquarium: { k: 'hall', roof: '#3a8fc7', wall: '#e6f1fb', gable: true },
     lionsgate: { k: 'bridge' }, englishbay: { k: 'inukshuk' }, granville: { k: 'hall', roof: '#ff9a4d', wall: '#fff1d6', gable: true, big: true },
     kits: { k: 'beach' }, qe: { k: 'dome', c: '#9be3c4', pink: true }, vandusen: { k: 'garden' }, moa: { k: 'hall', roof: '#8a8f98', wall: '#d8d4cc', flat: true, big: true },
-    capilano: { k: 'bridge2' }, grouse: { k: 'lodge', cable: true }, cypress: { k: 'lodge' }, seymour: { k: 'lodge' }, burnaby: { k: 'view' }, lynn: { k: 'bridge2' }, deepcove: { k: 'dock', c: '#e8503a' },
+    capilano: { k: 'bridge2' }, grouse: { k: 'lodge', cable: true }, cypress: { k: 'lodge' }, seymour: { k: 'lodge' }, westwood: { k: 'lodge' }, burnaby: { k: 'view' }, lynn: { k: 'bridge2' }, deepcove: { k: 'dock', c: '#e8503a' },
     steveston: { k: 'dock', c: '#3a6fc7' }, buddhist: { k: 'hall', roof: '#e8a02e', wall: '#e8503a', chinese: true, big: true },
     horseshoe: { k: 'dock', c: '#ffffff', ferry: true }, britannia: { k: 'mine' }, shannon: { k: 'falls' }, gondola: { k: 'lodge', cable: true }, chief: { k: 'rock' },
     brandywine: { k: 'falls' }, garibaldi: { k: 'rock', lake: true }, whistler: { k: 'village' }, peak2peak: { k: 'lodge', cable: true },
@@ -384,6 +384,7 @@
   bigAt('cypress', -60, -70, 250, 215, { name: 'Cypress', runs: 3, ski: true });
   bigAt('grouse', 10, -90, 270, 235, { name: 'Grouse', runs: 4, ski: true });
   bigAt('seymour', 70, -70, 250, 205, { name: 'Seymour', runs: 3, ski: true });
+  bigAt('westwood', 50, -60, 240, 190, { name: 'Westwood', runs: 0 });
   bigAt('whistler', -150, -150, 340, 270, { name: 'Whistler', runs: 5, ski: true });
   bigAt('whistler', 210, -170, 320, 260, { name: 'Blackcomb', runs: 5, ski: true });
   bigAt('gondola', 120, -110, 260, 220, { name: 'Habrich', runs: 0 });
